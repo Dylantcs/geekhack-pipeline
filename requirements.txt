@@ -1,0 +1,15 @@
+# Code packages
+pyspark==3.5.1
+requests==2.31.0
+
+# Dev packages
+black==22.3.0
+flake8==3.9.2
+kedro==0.18.1
+interrogate==1.5.0
+isort==5.9.3
+pytest==7.1.2
+pytest-celery==0.0.0
+pytest-redis==2.4.0
+pre-commit==2.15.0
+pytest-cov==2.12.1
