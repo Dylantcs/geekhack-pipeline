@@ -12,8 +12,8 @@ def topic_pages(page_soup: BeautifulSoup):
     return max(page_num_list)
 
 
-def topic_posts(page_soup: BeautifulSoup):
-    """Obtain user posts in html block format"""
+def topic_posts_by_page(page_soup: BeautifulSoup):
+    """Obtain user posts in html block format for a particulat page"""
     subposts = page_soup.find_all("div", class_="inner")
     # return [subpost.text for subpost in subposts]
     return subposts
