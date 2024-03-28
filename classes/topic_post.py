@@ -39,7 +39,8 @@ class TopicPost(object):
                     # get text part of post that user is replying to
                     prev_post_target_text = prev_post.next_sibling.text
                     reply_target_text.append(prev_post_target_text)
-                    # get text of reply
+                    # get text of reply (after prev post block)
+                    # TODO: handle replies that come before text block
                     reply_text = (
                         prev_post.next_sibling.next_sibling.next_sibling.next_sibling
                     )
