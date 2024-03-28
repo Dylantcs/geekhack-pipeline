@@ -1,0 +1,9 @@
+[project]
+name = "geekhack_pipeline"
+version = "0.0.1"
+
+[tool.setuptools]
+include-package-data = true
+packages = [
+    "helpers"
+]
