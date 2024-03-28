@@ -10,19 +10,20 @@ class TopicPost(object):
     def __init__(self, user_post: Tag):
         """Initialise the topicPost from a BeautifulSoup element Tag object"""
         self.tag = user_post
+        self.id = user_post["id"].split("_")[-1]
         self.text: str = user_post.text
-        self._parent_post_id: List[int] = None
-        self._previous_post_target_text: List[str] = None
-        self._replies: List[str] = None
+        self.parent_post_id: List[int] = None
+        self.previous_post_target_text: List[str] = None
+        self.replies: List[str] = None
+        self.find_replies()
 
-    @property
-    def parent_post_id(self):
+    def find_replies(self):
         """Looks through Tag to see whether the current post is a reply
         of another post.
         If there is a reply/ies, then the current post's parent(s) is the post(s)
         it replies to"""
-        # TODO: Reorg this to be a function that updates the 3 attr?
-        if not self._parent_post_id:
+        # TODO: handle self.text when post has reply?
+        if not self.parent_post_id:
             parent_post_id: List[int] = []
             reply_target_text: List[str] = []
             prev_post_reply: List[str] = []
@@ -44,8 +45,6 @@ class TopicPost(object):
                     )
                     prev_post_reply.append(reply_text)
 
-            self._parent_post_id = parent_post_id
-            self._reply_target_text = reply_target_text
-            self._replies = prev_post_reply
-
-        return self._parent_post_id
+            self.parent_post_id = parent_post_id
+            self.reply_target_text = reply_target_text
+            self.replies = prev_post_reply
