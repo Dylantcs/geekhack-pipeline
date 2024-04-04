@@ -17,6 +17,9 @@ class TopicPost(object):
         self.replies: List[str] = None
         self.find_replies()
 
+    def __repr__(self) -> str:
+        return f"Message {self.id}: {self.text}"
+
     def find_replies(self):
         """Looks through Tag to see whether the current post is a reply
         of another post.
