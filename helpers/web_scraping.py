@@ -1,9 +1,11 @@
 """Helpers for scraping a geekhack page"""
+from typing import List
+
+import bs4
 import requests
-from bs4 import BeautifulSoup
 
 
-def topic_pages(page_soup: BeautifulSoup):
+def topic_pages(page_soup: bs4.BeautifulSoup) -> int:
     """Obtain number of pages for a given topic from front page"""
     page_navigation = list(set(page_soup.find_all("a", class_="navPages")))
     page_text_list = [
@@ -18,20 +20,20 @@ def topic_pages(page_soup: BeautifulSoup):
         return 1
 
 
-def topic_posts_by_page(page_soup: BeautifulSoup):
+def topic_posts_by_page(page_soup: bs4.BeautifulSoup) -> List[bs4.element.Tag]:
     """Obtain user posts in html block format for a particular page"""
     subposts = page_soup.find_all("div", class_="inner")
     # return [subpost.text for subpost in subposts]
     return subposts
 
 
-def all_topic_posts(topic_id: int):
+def all_topic_posts(topic_id: int) -> List[bs4.element.Tag]:
     """Loops all pages of a given topic to obtain
     all user posts in html block format"""
 
     topic_fp_url = f"https://geekhack.org/index.php?topic={topic_id}"
     topic_fp = requests.get(topic_fp_url)
-    topic_fp_soup = BeautifulSoup(topic_fp.content, "html.parser")
+    topic_fp_soup = bs4.BeautifulSoup(topic_fp.content, "html.parser")
 
     topic_page_no = topic_pages(topic_fp_soup)
     topic_posts = topic_posts_by_page(topic_fp_soup)
@@ -44,7 +46,7 @@ def all_topic_posts(topic_id: int):
         topic_page_id = topic_id + page_counter
         topic_page_url = f"https://geekhack.org/index.php?topic={topic_page_id}0"
         topic_page = requests.get(topic_page_url)
-        topic_page_soup = BeautifulSoup(topic_page.content, "html.parser")
+        topic_page_soup = bs4.BeautifulSoup(topic_page.content, "html.parser")
 
         topic_page_posts = topic_posts_by_page(topic_page_soup)
         topic_posts.extend(topic_page_posts)
