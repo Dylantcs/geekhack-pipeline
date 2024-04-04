@@ -8,7 +8,7 @@ class TopicPost(object):
     """An object class to represent a singular topic post"""
 
     def __init__(self, user_post: Tag):
-        """Initialise the topicPost from a BeautifulSoup element Tag object"""
+        """Initialise the TopicPost from a BeautifulSoup element Tag object"""
         self.tag = user_post
         self.id = user_post["id"].split("_")[-1]
         self.text: str = user_post.text

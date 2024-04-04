@@ -19,7 +19,7 @@ def topic_pages(page_soup: BeautifulSoup):
 
 
 def topic_posts_by_page(page_soup: BeautifulSoup):
-    """Obtain user posts in html block format for a particulat page"""
+    """Obtain user posts in html block format for a particular page"""
     subposts = page_soup.find_all("div", class_="inner")
     # return [subpost.text for subpost in subposts]
     return subposts
