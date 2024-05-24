@@ -121,7 +121,16 @@ def get_last_post_details(last_post_block: bs4.Tag) -> List[str]:
 
 
 def get_listed_gb_details() -> List[List[str]]:
-    """Finds the gb listing blocks on first page and collates them into a List of List of details"""
+    """
+    Finds the gb listing blocks on first page and collates them into a List of List of details
+    Returns the following details for each listing in order:
+        - GB message number (part of html data)
+        - GB author
+        - total number of pages of the GB
+        - GB url (Used later to access post in sub-forum)
+        - date of last post in GB sub-forum
+        - author of last post in GB sub-forum
+    """
     # TODO: Extend search to all GB listing pages
     gb_listings = get_gb_listings()
     gb_listings_details = []
