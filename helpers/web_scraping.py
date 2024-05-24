@@ -120,8 +120,9 @@ def get_last_post_details(last_post_block: bs4.Tag) -> List[str]:
     return [str(last_post_datetime), last_post_author]
 
 
-def mine_gb_listing() -> List[List[str]]:
-    """Mines the gb listing blocks and collates them into a List of List of details"""
+def get_listed_gb_details() -> List[List[str]]:
+    """Finds the gb listing blocks on first page and collates them into a List of List of details"""
+    # TODO: Extend search to all GB listing pages
     gb_listings = get_gb_listings()
     gb_listings_details = []
 
