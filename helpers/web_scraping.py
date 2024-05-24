@@ -129,8 +129,6 @@ def mine_gb_listing() -> List[List[str]]:
         print(msg_no)
         subject_details = get_subject_details(detail_blocks["main_block"])
         last_post_details = get_last_post_details(detail_blocks["last_post_block"])
-        print(subject_details)
-        print(last_post_details)
 
         listing_details = []
         listing_details.append(msg_no)
