@@ -55,6 +55,16 @@ def all_topic_posts(topic_id: int) -> List[bs4.element.Tag]:
     return topic_posts
 
 
+def get_gb_pages(first_gb_page_bs: bs4.BeautifulSoup) -> int:
+    gb_page_nav_bar = first_gb_page_bs.find("div", class_ = "pagelinks floatleft")
+    gb_pages = gb_page_nav_bar.find_all("a", class_ = "navPages")
+    gb_page_text_list = [
+        navPage.text for navPage in gb_pages if "»" not in navPage.text
+    ]
+    page_num_list = [int(text) for text in gb_page_text_list]
+    return max(page_num_list)
+
+
 def get_gb_listings() -> Dict[str, Dict[str, bs4.Tag]]:
     """Searches through group buy listings and obtains subject block and last post block for each
     listing in a dictionary"""
