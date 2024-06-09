@@ -1,5 +1,5 @@
 # geekhack-pipeline
-Call Geekhack API through Tapatalk and process data
+Scrape geekhack GB pages for GB details and their respective user posts/comments
 
 ## Summary
 
