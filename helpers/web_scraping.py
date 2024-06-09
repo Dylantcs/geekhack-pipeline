@@ -56,6 +56,7 @@ def all_topic_posts(topic_id: int) -> List[bs4.element.Tag]:
 
 
 def get_gb_pages(first_gb_page_bs: bs4.BeautifulSoup) -> int:
+    """Find page navigation bar and get total gb pages"""
     gb_page_nav_bar = first_gb_page_bs.find("div", class_ = "pagelinks floatleft")
     gb_pages = gb_page_nav_bar.find_all("a", class_ = "navPages")
     gb_page_text_list = [
