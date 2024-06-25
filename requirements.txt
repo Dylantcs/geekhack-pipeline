@@ -1,7 +1,7 @@
 # Code packages
 beautifulsoup4==4.12.3
 pyspark==3.5.1
-requests==2.31.0
+requests==2.32.3
 
 # Dev packages
 black==22.3.0
