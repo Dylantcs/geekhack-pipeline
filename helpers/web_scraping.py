@@ -40,12 +40,15 @@ def all_topic_posts(topic_id: int) -> List[bs4.element.Tag]:
     topic_posts = topic_posts_by_page(topic_fp_soup)
 
     # gb url has page number as gb_fp_url.00 for page 1
-    # followed by gb_fp_url.50 for page 2
+    # followed by gb_fp_url.50 or gb_fp_url.050 for page 2
 
-    for i in range(1, topic_page_no):
-        page_counter = i * 0.5
+    for pg in range(1, topic_page_no):
+        page_counter = pg * 0.05
         topic_page_id = topic_id + page_counter
-        topic_page_url = f"https://geekhack.org/index.php?topic={topic_page_id}0"
+        if (pg + 1) % 2 == 0:
+            topic_page_url = f"https://geekhack.org/index.php?topic={topic_page_id}0"
+        else:
+            topic_page_url = f"https://geekhack.org/index.php?topic={topic_page_id}00"
         topic_page = requests.get(topic_page_url)
         topic_page_soup = bs4.BeautifulSoup(topic_page.content, "html.parser")
 
@@ -69,25 +72,35 @@ def get_gb_pages(first_gb_page_bs: bs4.BeautifulSoup) -> int:
 def get_gb_listings() -> Dict[str, Dict[str, bs4.Tag]]:
     """Searches through group buy listings and obtains subject block and last post block for each
     listing in a dictionary"""
-    gb_listings_url = "https://geekhack.org/index.php?board=70.0"
-    gb_listings_req = requests.get(gb_listings_url)
-    gb_listings_bs = bs4.BeautifulSoup(gb_listings_req.content, "html.parser")
-
-    listed_gbs_main_block = gb_listings_bs.find_all(
-        "span", id=lambda txt: txt is not None and "msg" in txt
-    )
+    gb_first_page_url = "https://geekhack.org/index.php?board=70"
     listed_gb_blocks = {}
-
-    for gb_subject_block in listed_gbs_main_block:
-        gb_id = gb_subject_block.get("id")
-        last_post_block = (
-            gb_subject_block.parent.parent.next_sibling.next_sibling.next_sibling.next_sibling
+    gb_first_page_req = requests.get(gb_first_page_url)
+    gb_first_page_bs = bs4.BeautifulSoup(gb_first_page_req.content, "html.parser")
+    gb_pages = get_gb_pages(gb_first_page_bs)
+    # TODO: change page range to all gb pages gb_pages attribute
+    for gb_page in range(5):
+        print(f"--Looking at page {gb_page + 1}--")
+        gb_url_tag = str(round(0.05 * gb_page, 2))[1:]
+        if (gb_page + 1) % 2 == 0:
+            gb_page_url = gb_first_page_url + f"{gb_url_tag}0"
+        else:
+            gb_page_url = gb_first_page_url + f"{gb_url_tag}00"
+        gb_page_req = requests.get(gb_page_url)
+        gb_page_bs = bs4.BeautifulSoup(gb_page_req.content, "html.parser")
+        listed_gbs_main_block = gb_page_bs.find_all(
+            "span", id=lambda txt: txt is not None and "msg" in txt
         )
-        gb_content_blocks = {
-            "main_block": gb_subject_block,
-            "last_post_block": last_post_block,
-        }
-        listed_gb_blocks[gb_id] = gb_content_blocks
+
+        for gb_subject_block in listed_gbs_main_block:
+            gb_id = gb_subject_block.get("id")
+            last_post_block = (
+                gb_subject_block.parent.parent.next_sibling.next_sibling.next_sibling.next_sibling
+            )
+            gb_content_blocks = {
+                "main_block": gb_subject_block,
+                "last_post_block": last_post_block,
+            }
+            listed_gb_blocks[gb_id] = gb_content_blocks
 
     return listed_gb_blocks
 
