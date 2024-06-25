@@ -171,3 +171,9 @@ def get_listed_gb_details() -> List[List[str]]:
         print("Done")
         gb_listings_details.append(listing_details)
     return gb_listings_details
+
+def get_topic_details(gb_details: List[List[str]]) -> Dict[str, List[List[str]]]:
+    """
+    Look into each topic and obtain all user posts within it
+    """
+    pass
