@@ -1,4 +1,6 @@
 # Code packages
 beautifulsoup4==4.12.3
+fastapi==0.111.0
 pyspark==3.5.1
 requests==2.32.3
+uvicorn==0.30.1
