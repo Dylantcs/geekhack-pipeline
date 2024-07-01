@@ -4,3 +4,15 @@ fastapi==0.111.0
 pyspark==3.5.1
 requests==2.32.3
 uvicorn==0.30.1
+
+# Dev packages
+black==22.3.0
+flake8==3.9.2
+interrogate==1.5.0
+isort==5.9.3
+kedro==0.18.12
+pre-commit==2.15.0
+pytest==7.1.2
+pytest-celery==0.0.0
+pytest-cov==2.12.1
+pytest-redis==2.4.0
