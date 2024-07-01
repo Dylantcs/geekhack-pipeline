@@ -9,4 +9,7 @@ def gb_details():
 
 @app.get("/gb_details")
 def gb_details():
+    """
+    Scrapes first 5 pages of GB forum listings
+    """
     return get_listed_gb_details()
